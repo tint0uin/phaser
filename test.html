@@ -25,7 +25,7 @@
             physics: {
                 default: 'arcade',
             arcade: {
-            
+                debug: true
             }
     },
             scene: {
@@ -41,7 +41,7 @@
         var swipeDirection;
         var canTurn = false;
         var distance;
-        var minDistance = 9;
+        var minDistance = 7;
 
 
 
@@ -59,7 +59,12 @@
     {
         this.add.image(400, 300, 'sea');
         player = this.physics.add.sprite(400,300 , 'player');
-        enemie = this.physics.add.sprite(200, 200, 'enemie');
+        enemies = this.physics.add.sprite(200, 200, 'enemie');
+
+        //enemies = this.physics.add.staticGroup();
+        //enemies.create(200,200, 'enemie');
+        
+        this.physics.add.collider(player, enemies);
         
         
 
@@ -96,39 +101,25 @@
 
         if(dx <= minDistance) {
             player.x = player.getData("positionX");
-            if(dy <= minDistance) {
-                player.y = player.getData("positionY");
-                
-            } else if(player.y < player.getData("positionY")) {
-                player.setVelocity(0 , 500 * vy).normalize;
-                
-            } else if(player.y > player.getData("positionY")) {
-                player.setVelocity(0 , -500 * vy);
-            }
+           
             
         } else if(player.x < player.getData("positionX")) {
-            if(dy <= minDistance) {
-                player.y = player.getData("positionY");
-                player.setVelocity(500 * vx , 0);
-                
-            } else if(player.y < player.getData("positionY")) {
-                player.setVelocity(500 * vx , 500 * vy);
-                
-            } else if(player.y > player.getData("positionY")) {
-                player.setVelocity(500 * vx , -500 * vy);
-            }
+            player.setVelocityX(400 * vx);
             
         } else if(player.x > player.getData("positionX")) {
-            if(dy <= minDistance) {
-                player.y = player.getData("positionY");
-                player.setVelocity(-500 * vx , 0);
-                
-            } else if(player.y < player.getData("positionY")) {
-                player.setVelocity(-500 * vx , 500 * vy);
-                
-            } else if(player.y > player.getData("positionY")) {
-                player.setVelocity(-500 * vx , -500 * vy);
-            }
+           player.setVelocityX(-400 * vx);
+            
+        }
+
+        if(dy <= minDistance) {
+            player.y = player.getData("positionY");
+           
+            
+        } else if(player.y < player.getData("positionY")) {
+            player.setVelocityY(400 * vy);
+            
+        } else if(player.y > player.getData("positionY")) {
+           player.setVelocityY(-400 * vy);
             
         }
 
@@ -147,11 +138,9 @@
             canTurn = false;
         }
 
-        if (!player.body.touching.none) {
-            console.log(player.x);
-        }
+        
 
-        if (player.body.touching.right && (enemie.body.touching.left || enemie.body.touching.right)) {
+        if (player.body.touching.left && (enemies.body.touching.left || enemies.body.touching.right)) {
             console.log("win");
         }
         
