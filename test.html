@@ -50,6 +50,7 @@
         this.load.image('sea' , 'assets/sea.png')
         this.load.image('player', 'assets/boat.png');
         this.load.image('enemie', 'assets/enemie_boat.png');
+        this.load.image('vois', 'assets.void.png');
 
         
         
@@ -59,6 +60,11 @@
     {
         this.add.image(400, 300, 'sea');
         player = this.physics.add.sprite(400,300 , 'player');
+        player.body.setSize(90 ,90);
+
+        playerF = this.physics.add.sprite(400, 240, 'void');
+        playerF.visible = false;
+
         enemies = this.physics.add.sprite(200, 200, 'enemie');
 
         //enemies = this.physics.add.staticGroup();
@@ -101,26 +107,28 @@
 
         if(dx <= minDistance) {
             player.x = player.getData("positionX");
+            playerF.x = player.getData("positionX");
            
             
         } else if(player.x < player.getData("positionX")) {
             player.setVelocityX(400 * vx);
+            playerF.setVelocityX(400 * vx);
             
         } else if(player.x > player.getData("positionX")) {
            player.setVelocityX(-400 * vx);
-            
+           playerF.setVelocityX(-400 * vx);
         }
 
         if(dy <= minDistance) {
             player.y = player.getData("positionY");
-           
+            playerF.y = player.getData("positionY");
             
         } else if(player.y < player.getData("positionY")) {
             player.setVelocityY(400 * vy);
-            
+            playerF.setVelocityY(400 * vy);
         } else if(player.y > player.getData("positionY")) {
            player.setVelocityY(-400 * vy);
-            
+           playerF.setVelocityY(-400 * vy);
         }
 
         
@@ -135,12 +143,13 @@
             var angle =  Phaser.Math.Angle.Between(player.x, player.y, player.getData("positionX"),  player.getData("positionY"));
             var angleD = Phaser.Math.RAD_TO_DEG * angle;
             player.setAngle(angleD + 90);
+            
             canTurn = false;
         }
 
         
 
-        if (player.body.touching.left && (enemies.body.touching.left || enemies.body.touching.right)) {
+        if (playerF.body.touching && (enemies.body.touching.left || enemies.body.touching.right)) {
             console.log("win");
         }
         
