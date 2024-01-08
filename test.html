@@ -68,6 +68,7 @@
         playerF = this.physics.add.sprite(400, 240, 'void');
         playerF.visible = false;
 
+        
         s1 = this.physics.add.image();
         s1.body.setCircle(10);
 
@@ -119,7 +120,7 @@
         }
 
         if(dx <= minDistance) {
-            player.x = player.getData("positionX");    
+            player.setVelocityX(0);  
         } else if(player.x < player.getData("positionX")) {
             player.setVelocityX(400 * vx); 
         } else if(player.x > player.getData("positionX")) {
@@ -127,7 +128,7 @@
         }
 
         if(dy <= minDistance) {
-            player.y = player.getData("positionY");
+            player.setVelocityY(0);  
             
             
         } else if(player.y < player.getData("positionY")) {
@@ -139,7 +140,7 @@
         }
 
         
-
+        
         
 
         if (dx <= minDistance && dy <= minDistance) {
@@ -147,9 +148,13 @@
         }
         
         if (canTurn) {
-            var angle =  Phaser.Math.Angle.Between(player.x, player.y, player.getData("positionX"),  player.getData("positionY"));
-            var angleD = Phaser.Math.RAD_TO_DEG * angle;
-            player.setAngle(angleD + 90);
+            //player.setAngularVelocity(-120);
+            //var angle =  Phaser.Math.Angle.Between(player.x, player.y, player.getData("positionX"),  player.getData("positionY"));
+            //var angleD = Phaser.Math.RAD_TO_DEG * angle;
+            //player.setAngle(angleD + 90);
+            //player.setAngularVelocity(angleD + 90);
+            //player.setAngularVelocity(0);
+            //this.physics.velocityFromRotation(ship.rotation, 600, ship.body.acceleration);
             
             canTurn = false;
         }
@@ -164,7 +169,7 @@
 
         player.body.updateCenter();
         s1.body.updateCenter();
-        RotateAround(s1.body.center, player.body.center.x, player.body.center.y, angleD);
+        //RotateAround(s1.body.center, player.body.center.x, player.body.center.y, player.rotation);
         
 
         
