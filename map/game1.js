@@ -1,9 +1,6 @@
 class game1 extends Phaser.Scene {
     constructor() {
         super({key: "game1"});
-<<<<<<< HEAD
-    }
-=======
         this.isClicking = false;
         this.canTurn = false;
         this.distance;
@@ -52,16 +49,15 @@ class game1 extends Phaser.Scene {
             this.isClicking = true;
         }
 
+        //calcule des distance et des vitesse de chaque axe
         var dy = Math.abs(this.player.y - this.player.getData("positionY"));
         var dx = Math.abs(this.player.x - this.player.getData("positionX"));
-
-
 
         var vx = dx / dy;
         var vy = dy / dx;
 
 
-
+        //cap vitesse 
         if (vx > 1) {
             vx = 1;
         }
@@ -69,47 +65,44 @@ class game1 extends Phaser.Scene {
             vy = 1;
         }
 
+        //application de la vitesse et de son signe
         if(dx <= this.minDistance) {
             this.player.setVelocityX(0);  
         } else if(this.player.x < this.player.getData("positionX")) {
-            this.player.setVelocityX(400 * vx); 
+            this.player.setVelocityX(vx); 
         } else if(this.player.x > this.player.getData("positionX")) {
-        this.player.setVelocityX(-400 * vx);
+        this.player.setVelocityX(-vx);
         }
 
         if(dy <= this.minDistance) {
             this.player.setVelocityY(0);  
-            
-            
         } else if(this.player.y < this.player.getData("positionY")) {
-            this.player.setVelocityY(400 * vy);
+            this.player.setVelocityY(vy);
             
         } else if(this.player.y > this.player.getData("positionY")) {
-        this.player.setVelocityY(-400 * vy);
+        this.player.setVelocityY(-vy);
         
         }
 
-        if (dx <= this.minDistance && dy <= this.minDistance) {
-            this.canTurn = false;
-        }
-        
+        //rotation de joueur
         if (this.canTurn) {
             var angle = Phaser.Math.RAD_TO_DEG * Phaser.Math.Angle.Between(this.player.x, this.player.y, this.player.getData("positionX"),  this.player.getData("positionY"));
             this.player.setAngle(angle + 90);
             this.canTurn = false;
         }
 
+        //normalisation de sa vittesse
+        this.player.body.velocity.normalize().scale(200);
         
         
-        //this.player.setAngularVelocity(50);
         
-        //place the proue hitbox
+        //positionnement de la hitbox de la proue
         this.centerBodyOnXY(this.proue, this.player.body.x + 40, this.player.body.y - 18);
         this.proue.body.updateCenter();
         Phaser.Math.RotateAround(this.proue.body.center, this.player.body.center.x, this.player.body.center.y, this.player.rotation);
         this.centerBodyOnPoint(this.proue, this.proue.body.center);
 
-        //add velocity to the proue for collision
+        //copy de la vélocité pour les collsiion
         this.proue.body.velocity.copy(this.player.body.velocity);
     }
 
@@ -127,6 +120,5 @@ class game1 extends Phaser.Scene {
 
     
 
->>>>>>> 001b72084363e75156cb7d9725d3fc3bda081158
 }
 
