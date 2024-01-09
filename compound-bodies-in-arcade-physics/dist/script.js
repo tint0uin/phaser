@@ -40,7 +40,7 @@ function create () {
 
   // ship.setDrag(300);
   ship.setMaxVelocity(600);
-  ship.setVelocity(50, 0);
+ 
 
   this.cameras.main.startFollow(ship);
   this.cameras.main.setZoom(2);
