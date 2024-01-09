@@ -1,0 +1,121 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 3</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10em;
+            margin-bottom: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <script type="text/javascript">
+        
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            physics: {
+                default: 'arcade',
+            arcade: {
+                debug: true
+            }
+    },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+    var game = new Phaser.Game(config);
+
+    var isClicking = false;
+    var distance;
+
+    function preload(){
+        this.load.image('catapulte','assets/CATAPULTE.png');
+        this.load.image('caillou','assets/caillou.png');
+        this.load.image('constantinople','assets/constantinople.png');
+        this.load.image('background','assets/bg_test.png');
+    }
+
+    function create(){
+        bg = this.add.image(400,300,'background');
+        bg.setScale(1.3);
+
+        constantinople = this.physics.add.sprite(700,425,'constantinople');
+        constantinople.body.setSize(320,215);
+        constantinople.setScale(0.5);
+
+        catapulte = this.physics.add.sprite(150,460, 'catapulte');
+        catapulte.body.setSize(500,350);
+        catapulte.setScale(0.2);
+
+        caillou = this.physics.add.sprite(130,440,'caillou');
+        caillou.setSize(750,650);
+        caillou.setScale(0.03);
+
+        //lifebar = this.add.rectangle(scene,200,100,148,148, 0x6666ff);
+
+        this.physics.add.collider(caillou, constantinople);
+
+    
+    }
+
+    function update(){
+
+        if(!this.input.activePointer.isDown && isClicking == true) {
+            caillou.setData("positionY", this.input.activePointer.position.y);
+            caillou.setData("positionX", this.input.activePointer.position.x);
+            isClicking = false;
+            distance = Phaser.Math.Distance.Between(caillou.x,caillou.y,caillou.getData("positionX"),caillou.getData("positionY"));
+        } else if(this.input.activePointer.isDown && isClicking == false) {
+            isClicking = true;
+        }
+
+        var dy = Math.abs(caillou.y - caillou.getData("positionY"));
+        var dx = Math.abs(caillou.x - caillou.getData("positionX"));
+
+        var vx = dx / dy;
+        var vy = dy / dx;
+
+        if (vx > 1) {
+            vx = 1;
+        }
+         if (vy > 1) {
+            vy = 1;
+        }
+ 
+        if(caillou.x < caillou.getData("positionX")) {
+            caillou.setVelocityX(400 * vx); 
+        } 
+        else if(caillou.x > caillou.getData("positionX")) {
+           caillou.setVelocityX(-400 * vx);
+        }
+            
+        if(caillou.y < caillou.getData("positionY")) {
+            caillou.setVelocityY(400 * vy);
+            
+        } 
+        else if(caillou.y > caillou.getData("positionY")) {
+           caillou.setVelocityY(-400 * vy);
+           
+        }
+
+        if(caillou.body.touching && constantinople.body.touching){
+            console.log("win");
+        }
+
+    }
+
+</script>
+
+</body>
+</html>  

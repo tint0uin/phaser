@@ -95,6 +95,7 @@ if (dx <= this.minDistance && dy <= this.minDistance) {
 }
 
 if (this.canTurn) {
+    
     var angle = Phaser.Math.RAD_TO_DEG * Phaser.Math.Angle.Between(this.player.x, this.player.y, this.player.getData("positionX"),  this.player.getData("positionY"));
     this.player.setAngle(angle + 90);
     this.canTurn = false;
