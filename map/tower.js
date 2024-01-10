@@ -113,7 +113,6 @@ export class Tower{
                     }
                 }*/
 
-            });
         //si le nombre de villes conquises est supérieur à ... alors il est possible d'attaquer ...
 
     }
