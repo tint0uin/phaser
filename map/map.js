@@ -1,8 +1,6 @@
-
-
-class map extends Phaser.Scene {
+export class map extends Phaser.Scene {
     constructor() {
-      super({ key: "map" });
+        super({ key: "map" });
         this.isClicking = false;
         this.swipeDirection;
         this.canTurn = false;
@@ -29,10 +27,10 @@ create () {
     this.player.body.setSize(80 ,80);
 
     //création des point d'entrés de jeux
-    game = this.physics.add.sprite(500,500,'game').setScale(0.1).setImmovable().refreshBody();
+    let game = this.physics.add.sprite(500,500,'game').setScale(0.1).setImmovable().refreshBody();
 
     //attribution de la fonction a executer l'ors d'une collision avec un point d'interêt
-    this.physics.add.collider(this.player,game, this.gameLoad, null , this);
+    this.physics.add.collider(this.player, game, this.gameLoad, null, this);
 }
 
 update () {
@@ -69,7 +67,7 @@ update () {
     } else if(this.player.x < this.player.getData("positionX")) {
         this.player.setVelocityX(400 * vx); 
     } else if(this.player.x > this.player.getData("positionX")) {
-    this.player.setVelocityX(-400 * vx);
+        this.player.setVelocityX(-400 * vx);
     }
 
     if(dy <= this.minDistance) {
