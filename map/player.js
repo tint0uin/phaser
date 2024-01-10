@@ -14,7 +14,8 @@ export class Player {
         return this;
     }
 
-    update(x, y, canTurn) {
+    
+    update(x, y, canTurn, enemies) {
         //console.log(this.body.y , this.body.x);
         //console.log(x, y);
         let dy = Math.abs(this.physicObj.y - y);
@@ -58,11 +59,19 @@ export class Player {
 
         this.centerBodyOnXY(this.proue, this.physicObj.body.x + 40, this.physicObj.body.y - 18);
         this.proue.body.updateCenter();
-        Phaser.Math.RotateAround(this.proue.body.center, this.proue.body.center.x, this.physicObj.body.center.x, this.physicObj.body.center.y, this.physicObj.rotation);
+        Phaser.Math.RotateAround(this.proue.body.center, this.physicObj.body.center.x, this.physicObj.body.center.y, this.physicObj.rotation);
         this.centerBodyOnPoint(this.proue, this.proue.body.center);
 
         this.proue.body.velocity.copy(this.physicObj.body.velocity);
 
+        if (!this.physicObj.body.touching.none) {
+            this.takeDamage();
+        }
+
+    }
+
+    takeDamage() {
+        console.log("hit");
     }
 
 
@@ -75,5 +84,10 @@ export class Player {
 
     centerBodyOnPoint (a, p) {
         this.centerBodyOnXY(a, p.x, p.y);
+    }
+
+    CollideWith(gameObject) {
+        this.scene.physics.add.collider(this.proue, gameObject);
+        this.scene.physics.add.collider(this.physicObj, gameObject);
     }
 }
