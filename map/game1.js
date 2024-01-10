@@ -45,6 +45,7 @@ class game1 extends Phaser.Scene {
              this.player.setData(("positionX"), this.input.activePointer.position.x);
              this.isClicking = false;
              this.canTurn = true;
+             
         }else if (this.input.activePointer.isDown && this.isClicking == false) {
             this.isClicking = true;
         }
@@ -52,39 +53,10 @@ class game1 extends Phaser.Scene {
         var dy = Math.abs(this.player.y - this.player.getData("positionY"));
         var dx = Math.abs(this.player.x - this.player.getData("positionX"));
 
+        console.log(this.player.getData("positionX"));
 
-
-        var vx = dx / dy;
-        var vy = dy / dx;
-
-
-
-        if (vx > 1) {
-            vx = 1;
-        }
-        if (vy > 1) {
-            vy = 1;
-        }
-
-        if(dx <= this.minDistance) {
-            this.player.setVelocityX(0);  
-        } else if(this.player.x < this.player.getData("positionX")) {
-            this.player.setVelocityX(400 * vx); 
-        } else if(this.player.x > this.player.getData("positionX")) {
-        this.player.setVelocityX(-400 * vx);
-        }
-
-        if(dy <= this.minDistance) {
-            this.player.setVelocityY(0);  
-            
-            
-        } else if(this.player.y < this.player.getData("positionY")) {
-            this.player.setVelocityY(400 * vy);
-            
-        } else if(this.player.y > this.player.getData("positionY")) {
-        this.player.setVelocityY(-400 * vy);
         
-        }
+        
 
         if (dx <= this.minDistance && dy <= this.minDistance) {
             this.canTurn = false;
@@ -96,6 +68,7 @@ class game1 extends Phaser.Scene {
             this.canTurn = false;
         }
 
+        this.player.body.velocity.normalize().scale(200);
         
         
         //this.player.setAngularVelocity(50);

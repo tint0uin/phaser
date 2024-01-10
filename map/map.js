@@ -76,11 +76,8 @@ if(dx <= this.minDistance) {
 
 if(dy <= this.minDistance) {
     this.player.setVelocityY(0);  
-    
-    
 } else if(this.player.y < this.player.getData("positionY")) {
     this.player.setVelocityY(400 * vy);
-    
 } else if(this.player.y > this.player.getData("positionY")) {
    this.player.setVelocityY(-400 * vy);
    
