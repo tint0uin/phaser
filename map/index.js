@@ -1,5 +1,6 @@
 import {game1} from "./game1.js";
 import {map} from "./map.js";
+import {game2} from "./game2.js";
 
 var config = {
     type : Phaser.AUTO,
@@ -11,7 +12,7 @@ var config = {
         debug: true
     }
 },
-scene: [map, game1]
+scene: [map, game1, game2]
 };
 
 var game = new Phaser.Game(config);

@@ -28,9 +28,11 @@ create () {
 
     //création des point d'entrés de jeux
     let game = this.physics.add.sprite(500,500,'game').setScale(0.1).setImmovable().refreshBody();
+    let game2 = this.physics.add.sprite(50,250,'game').setScale(0.1).setImmovable().refreshBody();
 
     //attribution de la fonction a executer l'ors d'une collision avec un point d'interêt
     this.physics.add.collider(this.player, game, this.gameLoad, null, this);
+    this.physics.add.collider(this.player, game2, this.gameLoadReconquista, null, this);
 }
 
 update () {
@@ -94,6 +96,9 @@ update () {
 
 gameLoad() {
     this.scene.switch("game1");
+}
+gameLoadReconquista(){
+    this.scene.switch("game2");
 }
 
 }
