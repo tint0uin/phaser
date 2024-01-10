@@ -59,9 +59,11 @@ export class game1 extends Phaser.Scene {
                 this.canTurn = true;
             }else if (this.input.activePointer.isDown && this.isClicking == false) {
                 this.isClicking = true;
+            }else {
+                this.canTurn = false;
             }
 
-        this.player.update(this.pointerX , this.pointerY);
+        this.player.update(this.pointerX , this.pointerY, this.canTurn);
         
     
     }
