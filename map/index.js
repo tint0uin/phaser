@@ -1,3 +1,6 @@
+import {game1} from "./game1.js";
+import {map} from "./map.js";
+
 var config = {
     type : Phaser.AUTO,
     width: 800,
